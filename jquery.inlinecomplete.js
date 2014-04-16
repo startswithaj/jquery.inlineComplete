@@ -12,12 +12,6 @@
 
         _defaultOptions:{
             list: [],
-            matchCase: false,
-            submitOnReturn: false,
-            // TODO Implement
-            startChar: '',
-            // TODO Implement
-            startCharCi: true,
             disableDataList: false
         },
 
@@ -30,11 +24,10 @@
          */
         _searchTerm: function(userInput, terms) {
             for (var i in terms) {
-                if (terms[i].substr(0, userInput.length) == userInput) {
+                if (terms[i].toLowerCase().substr(0, userInput.length) == userInput) {
                     return terms[i];
                 }
             }
-
             return null;
         },
 
@@ -50,7 +43,6 @@
          */
         _getCurrentWord: function(text, cursorPosition) {
             var start = text.substr(0, cursorPosition).lastIndexOf(' ') + 1;
-
             return text.substr(start, cursorPosition);
         },
 
@@ -71,16 +63,24 @@
                 return this;
             }
 
+
             var $inputElement = $(inputElement),
                 userInput     = this._getCurrentWord($inputElement.val()),
                 returnValue   = true;
 
             if (userInput != '') {
-                if (!options.matchCase) {
-                    userInput = userInput.toLowerCase();
-                }
-
+                userInput = userInput.toLowerCase();
+                // On keydown we get the key pressed
+                // Check to see if it's a part of the remaining selection
+                // If it is we simply return false suppressing keyUp
+                // And incrementing one letter forward in the selection
+                // (i.e deselecting the next letter in the match)
+                // Take the word Peter
+                // P was entered previously current selection is "eter"
+                // user presses 'e' we check to see if its the next character in 'eter'
+                // it is so we make the selection 'ter' and return false
                 if (event.type == 'keydown') {
+
                     // Move selection
                     var selection = $inputElement.__getSelection(),
                         letter    = String.fromCharCode(event.which);
@@ -88,6 +88,13 @@
                     if (letter == '')
                         return returnValue;
 
+                    // Tab completion
+                    // If there is a selection and tab is pressed go to end of selection
+                    if (event.which == 9 && selection != '') {
+                        $inputElement.__moveSelectionStart(selection.length);
+                        event.preventDefault();
+                        returnValue = false;
+                    }
                     // String.fromCharCode returns uppercase...
                     if (!event.shiftKey) {
                         letter = letter.toLowerCase();
@@ -95,7 +102,6 @@
 
                     if (letter == selection.substr(0, 1)) {
                         $inputElement.__moveSelectionStart(1);
-
                         returnValue = false;
                     }
                 } else if(event.type == 'keyup') {
@@ -108,17 +114,17 @@
                     // last time this event was fired. If the value didn't
                     // change it means that the user still enters the same
                     // word, hence we don't need to change the value.
-                    if (foundTerm !== null && foundTerm != userInput) {
+                    if (foundTerm !== null && foundTerm.toLowerCase() != userInput) {
                         var beforeCursor = inputValue.substr(0, curPos),
                             afterCursor  = inputValue.substr(curPos, inputValue.length),
                             curPosInWord = curPos - (inputValue.substr(0, curPos).lastIndexOf(' ') + 1);
 
                         // My sister suggested this var name...
-                        var poop = foundTerm.substr(curPosInWord, foundTerm.length);
 
-                        $inputElement.val(beforeCursor + poop + afterCursor);
+                        var restOfTerm = foundTerm.substr(curPosInWord, foundTerm.length);
+                        $inputElement.val(beforeCursor + restOfTerm + afterCursor);
 
-                        $inputElement.__select(curPos, poop.length + curPos);
+                        $inputElement.__select(curPos, restOfTerm.length + curPos);
                     }
                 }
             }

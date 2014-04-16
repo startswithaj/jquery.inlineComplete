@@ -5,8 +5,7 @@
     <meta charset="utf-8"/>
     <meta name="robots" content="noindex"/>
     <style type="text/css">
-        * {
-            font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+        body {
             font-size: 14px;
         }
 
@@ -28,30 +27,31 @@
     <option value="pburke.de">
 </datalist>
 
-<form action="http://patrickburke.de/action.php" method="post">
-    <p>
-        This input field should complete these URLs: <span
-            class="url-list"></span><br/>
-        <input class="test" type="text"
-               data-list="list:facebook.com|apple.de|google.de|www.golem.de|golem.de"
-               name="autocomplete_data_attr_list"/>
-    </p>
+<p>
+    This input field should complete these URLs: <span
+        class="url-list"></span><br/>
+    <input class="test" type="text"
+           data-list="list:facebook.com|apple.de|google.de|www.golem.de|golem.de"
+           name="autocomplete_data_attr_list"/>
+</p>
 
-    <p>
-        This input field should complete these URLs: <span
-            class="url-list"></span><br/>
-        <input class="test" type="text"
-               data-list="list:apple.de|google.de|www.golem.de|golem.de"
-               name="autocomplete_data_attr_list"/>
+<p>
+    This input field should complete these URLs: <span
+        class="url-list"></span><br/>
+    <input class="test" type="text"
+           data-list="list:apple.de|google.de|www.golem.de|golem.de"
+           name="autocomplete_data_attr_list"/>
 
-        <input class="test" type="text"
-               data-list="url:apple.de|google.de|www.golem.de|golem.de"
-               name="autocomplete_data_attr_list"/>
-    </p>
+    <input class="test" type="text"
+           data-list="url:apple.de|google.de|www.golem.de|golem.de"
+           name="autocomplete_data_attr_list"/>
+</p>
+<p>
+     <input id="blah" type="text">
+</p>
 
-    <p>
-        <input type="submit" value="Submit"/>
-    </p>
-</form>
+<p>
+    <input type="submit" value="Submit"/>
+</p>
 </body>
 </html>
