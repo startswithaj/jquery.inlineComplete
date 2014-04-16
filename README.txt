@@ -1,11 +1,18 @@
 /*
 * jQuery inlineComplete Plugin
+* 
+* This was forked from https://github.com/patrickburke/ 's original version.
+* I've removed a lot of the unused code and the unimplemented options.
+* Added Tab completion.
+* I would consider it in a usable state but by no means good.
+* 
+* Look at index.html/js for a demo its pretty straightforward.
+*
 * Examples and documentation at: http://pburke.de/jquery-inlinecomplete
-* Version: 0.2
+* Version: 0.3
 *
 * Licensed under the MIT license:
 *
-* Copyright (c) 2013 Patrick Burke
 * 
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
