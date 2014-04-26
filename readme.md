@@ -21,8 +21,6 @@ Version
 0.3
 
 
-![alt tag](https://s3-us-west-2.amazonaws.com/gitshoes/screenshot20140422-45272-isuk4x.png)
-
 License
 ----
 
