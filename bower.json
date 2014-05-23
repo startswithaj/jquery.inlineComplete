@@ -1,0 +1,26 @@
+{
+  "name": "jquery.inlineComplete",
+  "main": "jquery.inlineComplete.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/startswithaj/jquery.inlineComplete",
+  "authors": [
+    "Jake Mc <jake.mc@icloud.com>"
+    "Patrick Burke <patrick@pburke.de"
+  ],
+  "description": "jquery input text autocomplete plugin",
+  "keywords": [
+    "autocomplete",
+    "completion",
+    "input",
+    "text completion"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+ "dependencies": { "jquery": "latest" }
+}
