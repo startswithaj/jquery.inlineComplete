@@ -1,7 +1,7 @@
 {
   "name": "jquery.inlineComplete",
   "main": "jquery.inlineComplete.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/startswithaj/jquery.inlineComplete",
   "authors": [
     "Jake Mc <jake.mc@icloud.com>",
