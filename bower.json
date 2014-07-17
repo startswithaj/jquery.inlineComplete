@@ -1,7 +1,7 @@
 {
   "name": "jquery.inlineComplete",
   "main": "jquery.inlineComplete.js",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "homepage": "https://github.com/startswithaj/jquery.inlineComplete",
   "authors": [
     "Jake Mc <jake.mc@icloud.com>",
@@ -12,7 +12,8 @@
     "autocomplete",
     "completion",
     "input",
-    "text completion"
+    "text completion",
+    "inline"
   ],
   "license": "MIT",
   "ignore": [
