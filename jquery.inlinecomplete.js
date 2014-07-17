@@ -53,10 +53,11 @@
          * @param {Object} event
          * @param {Object} options
          */
-        _performComplete:function (inputElement, event, options) {
+        _performComplete:function (inputElement, event) {
+            var list = inputElement.data('termList')
             if (event.which == 8 || event.which == 46 // Backspace, del
                 || event.ctrlKey || event.which == 17 // Ctrl + Letter, or Ctrl
-                || !options.list || options.list.length == 0
+                || !list || list.length == 0 || event.metaKey
             ) {
                 return true;
             } else if (event.which == 16) {
@@ -108,19 +109,18 @@
                     var curPos     = $inputElement.__cursorPosition(),
                         inputValue = $inputElement.val();
 
-                    var foundTerm = this._searchTerm(userInput, options.list);
-
+                    var foundTerm = this._searchTerm(userInput, list);
                     // When a term was found and the input changed from the
                     // last time this event was fired. If the value didn't
                     // change it means that the user still enters the same
                     // word, hence we don't need to change the value.
-                    if (foundTerm !== null && foundTerm.toLowerCase() != userInput) {
+                    if (foundTerm !== null && foundTerm.toLowerCase() !== userInput) {
                         var beforeCursor = inputValue.substr(0, curPos),
                             afterCursor  = inputValue.substr(curPos, inputValue.length),
                             curPosInWord = curPos - (inputValue.substr(0, curPos).lastIndexOf(' ') + 1);
-
-                        // My sister suggested this var name...
-
+                        if ((beforeCursor + afterCursor) == foundTerm) {
+                            return true
+                        } 
                         var restOfTerm = foundTerm.substr(curPosInWord, foundTerm.length);
                         $inputElement.val(beforeCursor + restOfTerm + afterCursor);
 
@@ -200,9 +200,8 @@
      * Register inlineComplete plugin. This enables you to use $('input').inlineComplete();
      *
      * In the options object you have to at least include a list of list you want have completion for.
-     * The index for that list must be "list". You may also pass a URL. inlineComplete will then
-     * get the list of list from that source. Again, the response must contain the "list" index
-     * containing the list.
+     * The index for that list must be "list".
+
      * @param {Object} options
      */
     $.fn.inlineComplete = function (options) {
@@ -246,23 +245,12 @@
                 }
             }
 
-            var cleanList = [];
-            for(var i in instanceOptions.list) {
-                if (instanceOptions.list[i].replace(/\s*/, '') != '') {
-                    cleanList.push(instanceOptions.list[i]);
-                }
-            }
-
-            instanceOptions.list = cleanList;
-
-            // Still no options? Get the hell out of here!
-            if (instanceOptions.list.length == 0) {
-                return true;
-            }
 
             $this.on('keyup keydown', function (e) {
-                return _inlineComplete._performComplete($this, e, instanceOptions);
+                return _inlineComplete._performComplete($this, e);
             });
+
+            $this.data('termList', instanceOptions.list)
 
             return true;
         });
