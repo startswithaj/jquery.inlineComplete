@@ -54,10 +54,11 @@
          * @param {Object} options
          */
         _performComplete:function (inputElement, event) {
+            console.log(event.which);
             var list = inputElement.data('termList')
             if (event.which == 8 || event.which == 46 // Backspace, del
                 || event.ctrlKey || event.which == 17 // Ctrl + Letter, or Ctrl
-                || !list || list.length == 0 || event.metaKey
+                || !list || list.length == 0 || event.metaKey || event.which == 91
             ) {
                 return true;
             } else if (event.which == 16) {
@@ -101,7 +102,7 @@
                         letter = letter.toLowerCase();
                     }
 
-                    if (letter == selection.substr(0, 1)) {
+                    if (letter.toLowerCase() == selection.substr(0, 1).toLowerCase()) {
                         $inputElement.__moveSelectionStart(1);
                         returnValue = false;
                     }
@@ -118,10 +119,15 @@
                         var beforeCursor = inputValue.substr(0, curPos),
                             afterCursor  = inputValue.substr(curPos, inputValue.length),
                             curPosInWord = curPos - (inputValue.substr(0, curPos).lastIndexOf(' ') + 1);
-                        if ((beforeCursor + afterCursor) == foundTerm) {
+
+                        // this is so bad i dont even know what to say. run.
+                        if ((beforeCursor + afterCursor).toLowerCase().indexOf(foundTerm.toLowerCase()) > -1) {
                             return true
                         } 
-                        var restOfTerm = foundTerm.substr(curPosInWord, foundTerm.length);
+                        if (foundTerm.toLowerCase().indexOf((beforeCursor + afterCursor).toLowerCase()) == 0)
+                            var restOfTerm = foundTerm.substr((beforeCursor + afterCursor).length, foundTerm.length);    
+                        else
+                            var restOfTerm = foundTerm.substr(curPosInWord, foundTerm.length);
                         $inputElement.val(beforeCursor + restOfTerm + afterCursor);
 
                         $inputElement.__select(curPos, restOfTerm.length + curPos);

@@ -7,6 +7,7 @@ $(function() {
     })
     // You can then update the list later on and set it again
     termListNames.push("blah blah blah")
+    termListNames.push("Beans Beans Beans")
     termListNames.push("blahblahblah.com")
     $('#blah').inlineComplete({
       list: termListNames // will now include blah blah etc
